@@ -81,7 +81,7 @@ static Challenge all_challenges[NUMBER_OF_CHALLENGES] = {
     },
     {   
         "Sockets es un mecanismo de IPC. ¿Qué es más eficiente entre sockets y pipes?",
-        "Latexme\n\nSi\n\\mathrm{d}y = u^v{\\cdot}(v'{\\cdot}\\ln{(u)}+v{\\cdot}\frac{u'}{u})\nentonces\ny = ", 
+        "Latexme\n\nSi\n\\mathrm{d}y = u^v{\\cdot}(v'{\\cdot}\\ln{(u)}+v{\\cdot}\\frac{u'}{u})\nentonces\ny = ", 
         "u^v\n", 
         NULL
     },
