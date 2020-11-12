@@ -93,7 +93,7 @@ static Challenge all_challenges[NUMBER_OF_CHALLENGES] = {
     },
     {   
         "¿Qué es un RFC?",
-        "b gdbme y encontrá el valor mágico\nENTER para reintentar.", 
+        "b gdbme y encontrá el valor mágico\n", 
         "gdb_rules\n", 
         challenge11
     },
