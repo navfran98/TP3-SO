@@ -84,7 +84,22 @@ void challenge4(void){
 }
 
 void challenge7(void){
-    printf("Falta hacerlo, respuesta: K5n2UFfpFMUN\n");
+    srand(time(0));
+
+    int i, j = 0;
+    char answer [] = "K5n2UFfpFMUN\n";
+    char aux [] = "0";
+    int ret;
+
+    for (i = 0; i < 121; i++) {
+        if(i % 10 == 0) {
+            aux[0] = answer[j++];
+            run_and_check_error(ret = write(STDOUT_FILENO, aux, sizeof(aux)), "Error in write", -1);          
+        } else {
+            aux[0] = rand() % 95 + 32;
+            run_and_check_error(ret = write(STDERR_FILENO, aux, sizeof(aux)), "Error in write", -1);
+        }
+    }
 }
 
 void challenge8(void){
