@@ -2,7 +2,11 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <sys/socket.h> 
+#include <unistd.h>
 #include <string.h>
+#include <time.h>
+#include <math.h>
 #include "server.h"
 
 #define NUMBER_OF_CHALLENGES 12
@@ -12,7 +16,7 @@
 
 
 int main(void){
-    int socket_fd, fd/*, enable = 1*/;
+    int socket_fd, fd, enable = 1;
     struct sockaddr_in server_address;
 
     run_and_check_error(socket_fd = socket(AF_INET, SOCK_STREAM, 0), "Error with socket", -1);
@@ -21,13 +25,13 @@ int main(void){
     server_address.sin_addr.s_addr = htonl(INADDR_ANY); 
     server_address.sin_port = htons(PORT); 
 
-    // run_and_check_error(setsockopt(serverFd, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(enable));), "Error in setsockopt", -1);
-    run_and_check_error(bind(socket_fd, (struct sockaddr *)&serv_addr,sizeof(sockaddr)), "Error in bind", -1);
+    run_and_check_error(setsockopt(socket_fd, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(enable)), "Error in setsockopt", -1);
+    run_and_check_error(bind(socket_fd, (struct sockaddr *)&server_address,sizeof(server_address)), "Error in bind", -1);
     run_and_check_error(listen(socket_fd, 1), "Error in listen", -1);
     run_and_check_error(fd = accept(socket_fd, (struct sockaddr *)0x0, (socklen_t *)0x0), "Error in accept", -1);
     
     run_all_challenges(fd);
-    
+
     return 0;
 }
 
@@ -36,20 +40,22 @@ void run_all_challenges(int fd){
 
     for(int i = 0; i < NUMBER_OF_CHALLENGES; i++){
         printf("------------- DESAFIO -------------\n");
-        printf("%s\n", challenges[i]->hint);
-        run_challenge_function(challenges[i]);
+        printf("%s\n", all_challenges[i].hint);
+        run_challenge_function(all_challenges[i]);
 
         printf("--------- PREGUNTA PARA INVESTIGAR ---------\n");
-        printf("%s\n", challenges[i]->question);
+        printf("%s\n", all_challenges[i].question);
 
         get_answer(fd, buffer, BUFFER_SIZE);
-        if(strcmp(challenge[i]->answer, buffer) == 0){
+        if(strcmp(all_challenges[i].answer, buffer) == 0){
             printf("Respuesta Correcta: %s\n", buffer);
         } else{
             printf("Respuesta Incorrecta: %s\n", buffer);
             i--; //para que vaya al proximo y continue denuevo con este
         }
+        printf("\n\n\n\n");
     }
+    printf("Felicitaciones, finalizaron el juego. Ahora deberan implementar el servidor que se comporte como el servidor provisto\n");
 }
 
 void get_answer(int fd, char * buffer, int buffer_size){
@@ -59,12 +65,12 @@ void get_answer(int fd, char * buffer, int buffer_size){
         buffer[resp] = '\0';
         return;
     }
-    exit(0); //No se porque hacen esto. Tengo q leer bien que devuelve la funcion recv
+    exit(0);
 }
 
 void run_challenge_function(Challenge challenge){
-    if(challenge->function != NULL){
-        (challenge->function)();
+    if(challenge.func != NULL){
+        (challenge.func)();
     }
 }
 
@@ -72,15 +78,14 @@ void challenge4(void){
     char * ans;
     ans = "La respuesta es: fk3wfLCm3QvS";
 
-    int ret = write(13, ans, sizeof(ans));
+    int ret = write(13, ans, strlen(ans));
     if(ret == -1)
         perror("write");
 }
-//ESTE NI IDEA 
-void challenge7(void){
-    
-}
 
+void challenge7(void){
+    printf("Falta hacerlo, respuesta: K5n2UFfpFMUN\n");
+}
 
 void challenge8(void){
    printf("\033[1;91;101mLa respuesta es: BUmyYq5XxXGt\033[0m\n");
@@ -102,23 +107,18 @@ void challenge10(void){
     }
 }
 
-
 void gdbme(void){
-    char * s;
     int var;
-  
-  var = getpid();
-  if (var != 0x12345678) {
-    printf("ENTER PARA REINTENTAR\n");
-  }else
-    printf("La respuesta es gdb_rules");
-  
+    var = getpid();
+    if (var != 0x12345678) {
+        printf("ENTER PARA REINTENTAR\n");
+    }else
+        printf("La respuesta es gdb_rules");
 }
 
 void challenge11(void){
     gdbme();
 }
-
 
 void challenge12(void){
     srand(time(0));
@@ -135,10 +135,11 @@ void challenge12(void){
 
         z = R * cos(O);
 
-        printf("%d ", z);
+        printf("%f ", z);
         cont--;
 
     }while(cont != 0);
+    printf("\n");
 }
 
 void run_and_check_error(int error, char message[], int retval){
