@@ -1,0 +1,136 @@
+---------DESAFIO--------- 
+
+hint: presentacion del tp
+respuesta: entendido
+
+---------DESAFIO--------- 
+
+hint: The Wire S1E5 5295 888 6288
+
+respuesta: itba
+
+solucion: esos numeros representan los numeros de un telefono, pero el truco esta en que para
+		encontrar el verdadero num de telefono, hay que hacer un pequeño truco
+		hay que saltar el 5, como explica Prez en el capitulo 5 de la season 1 de The Wire
+		osea, cada numero es en realidad el espejo del otro.
+		Nose coomo explicarlo con palabras, basicamente:
+		1 => 9
+		2 => 8
+		3 => 7
+		4 => 6
+		5 => 0 
+		...
+
+Se llega al 0810 222 4822 el numero del itba :D
+
+---------DESAFIO--------- 
+hint: https://ibb.co/tc0Hb6w
+
+respuesta: M4GFKZ289aku
+
+solucion: ese link lleva a una imagen en blanco, y simplemente la pusimos en un analizador de imagenes online, y modificando algunos factores, aparecio el codigo.
+(para ser mas exactos, pusimos el ELA, y a partir de esa imagen lo hicimos de nuevo)
+(no preguntes que es el ELA porque ni idea, recordatorio de curioso nomas: buscarlo)
+
+---------DESAFIO--------- 
+hint: EBADF...
+
+write: Bad file descriptor
+
+Respuesta: fk3wfLCm3QvS
+Solucion: Correrlo con el strace
+
+---------DESAFIO--------- 
+hint: respuesta = strings:277
+
+Respuesta: too_easy
+Solucion: $> strings server    y es basicamente la ultima
+
+---------DESAFIO--------- 
+hint: .data .bss .comment ? .shstrtab .symtab .strtab
+
+Respuesta: .RUN_ME
+Solucion: decompilamos el programa, y obtuvimos un  listado de todas sus secciones. Probamos hasta que la encontramos jajajaj
+
+---------DESAFIO--------- 
+hint:filter error
+(string super raro)
+
+respuesta: K5n2UFfpFMUN
+solucion: correr con ./server 8080 2>/dev/null
+
+---------DESAFIO--------- 
+hint: ¿? 
+(muestran una oracion tapada con un color)
+
+Respuesta: BUmyYq5XxXGt
+solucion: seleccionar lo que estaba, copiarlo y pegar
+
+---------DESAFIO--------- 
+hint: Latexme
+Si
+\mathrm{d}y = u^v{\cdot}(v'{\cdot}\ln{(u)}+v{\cdot}\frac{u'}{u})
+entonces 
+y = 												
+
+respuesta: u^v
+solucion: despejar y
+
+---------DESAFIO--------- 
+hint: quine
+
+gcc: error: quine.c: No such file or directory
+gcc: fatal error: no input files
+
+ENTER para reintentar
+
+respuesta: chin_chu_lan_cha
+solucion: nuestro quine.c es:
+ 	main() { char *s="main() { char *s=%c%s%c; printf(s,34,s,34); }"; printf(s,34,s,34); }
+
+---------DESAFIO---------  
+hint: b gdbme y ...
+
+respuesta: gdb_rules
+solucion: gdbme pide el pid del proceso. En filter error hay un anti tracker que mata al gdb, entonces hay que correr 
+		 el gdb cuando se llega a este desafio, y ahi hacer un attach al server con el pid. Cambiar el pid a 0x12345678 para ver la respuesta
+
+---------DESAFIO--------- 
+hint: me conoces
+
+respuesta: normal
+Solucion:	Abrimos el archivo server como un txt y vimos que habia una seguidilla de hashes interesante. 
+			Fuimos uno por uno convirtiendolos a texto, solo 2 se pudieron convertir (uno que decia "itba" y otro que decia "normal")
+			Probamos con "normal" ya que "itba" ya era una respuesta anterior y funciono.
+			(mas tarde para la implementacion vimos el codigo decompilado y vimos que se trataba de la distribucion normal).
+
+
+/////////////////////////
+-------EASTER EGGS-------
+1)
+ _______________________
+< ESTO ES UN EASTER_EGG >
+ -----------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+
+2)
+V_E-0x620
+V_E
+A_S
+L__
+G_G
+R_E
+I_N
+N_I
+D_A
+__L
+
+FORMAN: VALGRIND ES GENIAL
+(al correr el programa con valgrind, aparecen en ese orden).
+
+3)
+al terminar, se crea en /tmp un archivo "hidden" que dice: QUE CURIOSO
